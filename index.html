@@ -366,6 +366,367 @@ let saved=localStorage.getItem("banzz_session");
 if(saved&&getUsers()[saved])openDashboard(saved);
 else localStorage.removeItem("banzz_session");
 </script>
+  
+<script>
+// ==================================
+// BANZZSMM PANEL - BAGIAN 5/6
+// LOGIN, REGISTER, DAN NAVIGASI
+// ==================================
+
+const USERS_KEY = "banzzsmm_users";
+const SESSION_KEY = "banzzsmm_session";
+const ORDERS_KEY = "banzzsmm_orders";
+
+function getUsers() {
+  return JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
+}
+
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+function getCurrentUser() {
+  return localStorage.getItem(SESSION_KEY);
+}
+
+function showLogin() {
+  document.getElementById("loginScreen").classList.remove("hidden");
+  document.getElementById("registerScreen").classList.add("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
+
+function showRegister() {
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("registerScreen").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
+
+function showApp(username) {
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("registerScreen").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  document.getElementById("currentUsername").textContent = username;
+  document.getElementById("userAvatar").textContent =
+    username.charAt(0).toUpperCase();
+
+  showPage("dashboard");
+  refreshDashboard();
+}
+
+// REGISTER
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const username = document.getElementById("registerUsername").value.trim();
+  const password = document.getElementById("registerPassword").value;
+
+  if (username.length < 3 || password.length < 4) {
+    alert("Username minimal 3 karakter dan password minimal 4 karakter.");
+    return;
+  }
+
+  const users = getUsers();
+
+  if (users.some(user => user.username.toLowerCase() === username.toLowerCase())) {
+    alert("Username sudah digunakan. Silakan pilih username lain.");
+    return;
+  }
+
+  users.push({ username, password });
+  saveUsers(users);
+
+  alert("Pendaftaran berhasil! Silakan login.");
+  document.getElementById("registerForm").reset();
+  showLogin();
+});
+
+// LOGIN
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const username = document.getElementById("loginUsername").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  const user = getUsers().find(item =>
+    item.username.toLowerCase() === username.toLowerCase() &&
+    item.password === password
+  );
+
+  if (!user) {
+    alert("Username atau password salah.");
+    return;
+  }
+
+  localStorage.setItem(SESSION_KEY, user.username);
+  showApp(user.username);
+});
+
+// NAVIGASI HALAMAN
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(section => {
+    section.classList.remove("active");
+  });
+
+  const selectedPage = document.getElementById(page + "Page");
+
+  if (selectedPage) {
+    selectedPage.classList.add("active");
+  }
+
+  const titles = {
+    dashboard: "Dashboard",
+    order: "New Order",
+    history: "Order History"
+  };
+
+  document.getElementById("pageTitle").textContent =
+    titles[page] || "Dashboard";
+
+  document.querySelectorAll(".nav-btn[data-page]").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === page);
+  });
+
+  if (page === "history") {
+    renderHistory();
+  }
+}
+
+document.querySelectorAll(".nav-btn[data-page]").forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+});
+
+// LOGOUT
+function logout() {
+  localStorage.removeItem(SESSION_KEY);
+  showLogin();
+}
+
+// CEK SESI SAAT HALAMAN DIBUKA
+const savedSession = getCurrentUser();
+
+if (savedSession && getUsers().some(user => user.username === savedSession)) {
+  showApp(savedSession);
+} else {
+  showLogin();
+}
+
+// ==================================
+// BANZZSMM PANEL - BAGIAN 6/6
+// ORDER, HARGA, DAN RIWAYAT
+// ==================================
+
+function getOrders() {
+  return JSON.parse(localStorage.getItem(ORDERS_KEY) || "[]");
+}
+
+function saveOrders(orders) {
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+}
+
+// HARGA SIMULASI
+function calculatePrice() {
+  const service = document.getElementById("service");
+  const quantity = document.getElementById("quantity");
+  const estimatedPrice = document.getElementById("estimatedPrice");
+
+  if (!service || !quantity || !estimatedPrice) return;
+
+  const rates = {
+    Followers: 500,
+    Likes: 300,
+    Views: 100
+  };
+
+  const amount = Math.max(0, Number(quantity.value) || 0);
+  const rate = rates[service.value] || 500;
+  const total = Math.ceil(amount / 100) * rate;
+
+  estimatedPrice.textContent =
+    "Rp " + total.toLocaleString("id-ID");
+}
+
+document.getElementById("service").addEventListener("change", calculatePrice);
+document.getElementById("quantity").addEventListener("input", calculatePrice);
+
+// PEMBUATAN PESANAN DEMO
+document.getElementById("orderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const username = getCurrentUser();
+  const platform = document.getElementById("platform").value;
+  const service = document.getElementById("service").value;
+  const link = document.getElementById("targetLink").value.trim();
+  const quantity = Number(document.getElementById("quantity").value);
+
+  if (!username) {
+    alert("Silakan login terlebih dahulu.");
+    showLogin();
+    return;
+  }
+
+  if (!platform || !service || !link || !quantity) {
+    alert("Mohon lengkapi semua data pesanan.");
+    return;
+  }
+
+  if (quantity < 10 || quantity > 10000) {
+    alert("Jumlah pesanan harus antara 10 sampai 10.000.");
+    return;
+  }
+
+  let validUrl = false;
+
+  try {
+    const parsedUrl = new URL(link);
+    validUrl = parsedUrl.protocol === "https:" || parsedUrl.protocol === "http:";
+  } catch (error) {
+    validUrl = false;
+  }
+
+  if (!validUrl) {
+    alert("Masukkan URL yang valid, diawali http:// atau https://");
+    return;
+  }
+
+  const rates = {
+    Followers: 500,
+    Likes: 300,
+    Views: 100
+  };
+
+  const rate = rates[service] || 500;
+  const price = Math.ceil(quantity / 100) * rate;
+
+  const order = {
+    id: "BZ" + Date.now().toString().slice(-8),
+    username: username,
+    platform: platform,
+    service: service,
+    link: link,
+    quantity: quantity,
+    price: price,
+    date: new Date().toLocaleString("id-ID"),
+    status: "Simulasi"
+  };
+
+  const orders = getOrders();
+  orders.unshift(order);
+  saveOrders(orders);
+
+  alert("Pesanan demo berhasil dibuat!");
+
+  document.getElementById("orderForm").reset();
+  calculatePrice();
+
+  refreshDashboard();
+  showPage("history");
+});
+
+// MENCEGAH HTML DARI INPUT PENGGUNA
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char];
+  });
+}
+
+// MEMPERBARUI DASHBOARD
+function refreshDashboard() {
+  const username = getCurrentUser();
+
+  const orders = getOrders().filter(order =>
+    order.username === username
+  );
+
+  const total = orders.length;
+  const processing = orders.filter(order =>
+    order.status === "Diproses"
+  ).length;
+  const completed = orders.filter(order =>
+    order.status === "Selesai"
+  ).length;
+
+  document.getElementById("totalOrders").textContent = total;
+  document.getElementById("processingOrders").textContent = processing;
+  document.getElementById("completedOrders").textContent = completed;
+
+  const count = document.getElementById("historyCount");
+  if (count) count.textContent = total + " pesanan";
+}
+
+// MENAMPILKAN RIWAYAT
+function renderHistory() {
+  const username = getCurrentUser();
+
+  const orders = getOrders().filter(order =>
+    order.username === username
+  );
+
+  const container = document.getElementById("historyContainer");
+  const count = document.getElementById("historyCount");
+
+  if (!container) return;
+
+  if (count) {
+    count.textContent = orders.length + " pesanan";
+  }
+
+  if (orders.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div style="font-size:35px;margin-bottom:10px">📦</div>
+        Belum ada riwayat pesanan.
+        <p style="margin-top:8px">Pesanan demo kamu akan muncul di sini.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID PESANAN</th>
+            <th>PLATFORM</th>
+            <th>LAYANAN</th>
+            <th>JUMLAH</th>
+            <th>HARGA</th>
+            <th>STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orders.map(order => `
+            <tr>
+              <td>${escapeHTML(order.id)}</td>
+              <td>${escapeHTML(order.platform)}</td>
+              <td>${escapeHTML(order.service)}</td>
+              <td>${Number(order.quantity).toLocaleString("id-ID")}</td>
+              <td>Rp ${Number(order.price).toLocaleString("id-ID")}</td>
+              <td><span class="status">Simulasi</span></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:15px">
+      Semua pesanan pada versi ini hanya simulasi dan tidak dikirim ke penyedia layanan.
+    </p>
+  `;
+}
+
+// HITUNG HARGA SAAT PERTAMA DIBUKA
+calculatePrice();
+</script>
+  
 </body>
   </html>
    
