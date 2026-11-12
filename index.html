@@ -6,158 +6,271 @@
 <title>BANZZSMM PANEL</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#090b13;color:#fff;min-height:100vh}
-header{background:#141827;padding:20px;border-bottom:1px solid #292e42;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:21px;font-weight:900;color:#a78bfa}
+body{background:#090b13;color:white;font-family:Arial,sans-serif}
+header{background:#141827;padding:17px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292e42}
+.logo{font-size:21px;font-weight:bold;color:#a78bfa}
 .logo span{color:white}
-main{max-width:850px;margin:auto;padding:25px 16px}
-.auth{max-width:420px;margin:45px auto;background:#141827;border:1px solid #292e42;border-radius:17px;padding:25px}
+main{max-width:950px;margin:auto;padding:22px 16px}
+.hidden{display:none!important}
+.auth,.panel,.stat,.service{background:#141827;border:1px solid #292e42;border-radius:13px;padding:20px}
+.auth{max-width:420px;margin:45px auto}
 h1{font-size:25px;margin-bottom:10px}
-.sub{color:#929bb1;font-size:13px;margin-bottom:25px;line-height:1.5}
-input{width:100%;padding:14px;margin:8px 0 15px;background:#0b0f1c;border:1px solid #343b53;border-radius:9px;color:white;outline:none}
-input:focus{border-color:#a78bfa}
-label{font-size:13px;color:#c8cce0}
-button{border:0;background:#8052df;color:white;padding:13px;border-radius:9px;font-weight:bold;cursor:pointer}
+.sub,p{color:#9ca5bb;font-size:13px;line-height:1.6}
+label{display:block;font-size:13px;margin-top:15px}
+input,select{width:100%;padding:13px;margin-top:8px;background:#090e1b;color:white;border:1px solid #343b53;border-radius:8px}
+button{background:#8052df;color:white;border:0;padding:12px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
 button:hover{background:#9b73ef}
-.full{width:100%}
-.switch{text-align:center;color:#9ca5bb;font-size:13px;margin-top:20px}
+.full{width:100%;margin-top:17px}
+.switch{text-align:center;margin-top:17px;font-size:13px}
 .switch a{color:#b59aff;cursor:pointer}
-.hidden{display:none}
-.notice{color:#a78bfa;font-size:12px;margin-top:14px}
-.welcome{background:linear-gradient(120deg,#5426a8,#171b36);padding:25px;border-radius:15px;margin-bottom:20px}
-.welcome p{color:#d5c9ff;margin-top:8px;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
-.stat,.service{background:#141827;border:1px solid #292e42;padding:18px;border-radius:12px}
+.notice{color:#b59aff;margin-top:12px;font-size:13px}
+.welcome{padding:25px;background:linear-gradient(120deg,#5426a8,#171b36);border-radius:14px}
+.welcome p{margin-top:8px;color:#ddd0ff}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.nav button{background:#20263a}
+.nav button.active{background:#8052df}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
 .stat small{color:#929bb1}
 .stat h2{color:#b59aff;margin-top:10px;font-size:21px}
-.title{font-size:19px;margin:25px 0 14px}
+.section{margin-top:20px}
+.section h2{font-size:19px;margin-bottom:15px}
 .services{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.service p{font-size:12px;color:#9ca5bb;margin:9px 0}
-.service button{width:100%;margin-top:10px;font-size:12px}
-.panel{background:#141827;padding:18px;border:1px solid #292e42;border-radius:12px;margin-top:20px}
-.panel p{font-size:13px;color:#aab1c5;margin-top:10px;line-height:1.6}
-#message{font-size:13px;color:#b59aff;margin-top:12px}
+.service p{margin:8px 0}
+.service button{margin-top:10px}
+.panel{margin-top:15px}
+.panel h2{margin-bottom:15px}
+.result{background:#252044;border-radius:9px;padding:15px;margin-top:15px}
+.result strong{color:#c5aaff;font-size:22px}
+.order{border-bottom:1px solid #30364b;padding:14px 0;font-size:13px}
 footer{text-align:center;color:#747d91;padding:25px;font-size:12px}
-@media(max-width:500px){.stats{grid-template-columns:1fr}.welcome h1{font-size:22px}}
+@media(max-width:550px){.stats{grid-template-columns:1fr}.services{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <header>
 <div class="logo">BANZZ<span>SMM</span></div>
-<button id="logout" class="hidden" onclick="logout()">Logout</button>
+<button id="logoutBtn" class="hidden" onclick="logout()">LOGOUT</button>
 </header>
 
 <main>
 <section id="loginBox" class="auth">
 <h1>Welcome Back!</h1>
-<p class="sub">Login ke akun BANZZSMM PANEL kamu.</p>
+<p class="sub">Login ke BANZZSMM PANEL.</p>
 <label>Username</label>
-<input id="loginUser" placeholder="Masukkan username">
+<input id="loginUser" placeholder="Username">
 <label>Password</label>
-<input id="loginPass" type="password" placeholder="Masukkan password">
+<input id="loginPass" type="password" placeholder="Password">
 <button class="full" onclick="login()">LOGIN</button>
-<p class="switch">Belum punya akun? <a onclick="showRegister()">Register</a></p>
-<p id="loginMsg" class="notice"></p>
+<div class="switch">Belum punya akun? <a onclick="showRegister()">Register</a></div>
+<div id="loginMsg" class="notice"></div>
 </section>
 
 <section id="registerBox" class="auth hidden">
 <h1>Create Account</h1>
-<p class="sub">Buat akun demo BANZZSMM PANEL.</p>
+<p class="sub">Daftar akun demo baru.</p>
 <label>Username</label>
-<input id="regUser" placeholder="Buat username">
+<input id="regUser" placeholder="Username">
 <label>Password</label>
-<input id="regPass" type="password" placeholder="Buat password">
+<input id="regPass" type="password" placeholder="Password">
 <label>Konfirmasi Password</label>
-<input id="regConfirm" type="password" placeholder="Ulangi password">
+<input id="regConfirm" type="password" placeholder="Konfirmasi password">
 <button class="full" onclick="register()">CREATE ACCOUNT</button>
-<p class="switch">Sudah punya akun? <a onclick="showLogin()">Login</a></p>
-<p id="regMsg" class="notice"></p>
+<div class="switch">Sudah punya akun? <a onclick="showLogin()">Login</a></div>
+<div id="regMsg" class="notice"></div>
 </section>
 
 <section id="dashboard" class="hidden">
 <div class="welcome">
-<h1>Welcome to BANZZSMM!</h1>
-<p>Halo, <b id="username"></b>. Selamat datang di dashboard kamu.</p>
+<h1>BANZZSMM PANEL</h1>
+<p>Welcome back, <b id="username"></b>!</p>
+<p>Social Media Marketing Dashboard — Demo</p>
 </div>
+
+<div class="nav">
+<button id="homeTab" class="active" onclick="showPage('home')">Dashboard</button>
+<button id="orderTab" onclick="showPage('order')">New Order</button>
+<button id="historyTab" onclick="showPage('history')">Order History</button>
+</div>
+
+<div id="homePage">
 <div class="stats">
 <div class="stat"><small>Total Services</small><h2>06</h2></div>
-<div class="stat"><small>Total Orders</small><h2>00</h2></div>
+<div class="stat"><small>Total Orders</small><h2 id="totalOrders">00</h2></div>
 <div class="stat"><small>Account Balance</small><h2>Rp 0</h2></div>
 </div>
-<h2 class="title">Social Media Services</h2>
-<div class="services">
-<div class="service">📸 <b>Instagram</b><p>Marketing services demo</p><button onclick="order('Instagram')">Pilih layanan</button></div>
-<div class="service">🎵 <b>TikTok</b><p>Marketing services demo</p><button onclick="order('TikTok')">Pilih layanan</button></div>
-<div class="service">▶️ <b>YouTube</b><p>Marketing services demo</p><button onclick="order('YouTube')">Pilih layanan</button></div>
-<div class="service">👥 <b>Facebook</b><p>Marketing services demo</p><button onclick="order('Facebook')">Pilih layanan</button></div>
-<div class="service">✈️ <b>Telegram</b><p>Marketing services demo</p><button onclick="order('Telegram')">Pilih layanan</button></div>
-<div class="service">💬 <b>WhatsApp</b><p>Marketing services demo</p><button onclick="order('WhatsApp')">Pilih layanan</button></div>
-</div>
 <div class="panel">
-<h3>Informasi Akun</h3>
-<p>Mode: Demo<br>Saldo: Rp 0<br>Status: Aktif (simulasi)</p>
-<p id="message"></p>
+<h2>Welcome to BanzzSMM</h2>
+<p>Pilih menu New Order untuk mencoba simulasi pemesanan layanan.</p>
+<button onclick="showPage('order')" style="margin-top:15px">CREATE NEW ORDER →</button>
+</div>
+<div class="section">
+<h2>Available Platforms</h2>
+<div class="services">
+<div class="service">📸 <b>Instagram</b><p>Demo marketing services</p></div>
+<div class="service">🎵 <b>TikTok</b><p>Demo marketing services</p></div>
+<div class="service">▶️ <b>YouTube</b><p>Demo marketing services</p></div>
+<div class="service">👥 <b>Facebook</b><p>Demo marketing services</p></div>
+<div class="service">✈️ <b>Telegram</b><p>Demo marketing services</p></div>
+<div class="service">💬 <b>WhatsApp</b><p>Demo marketing services</p></div>
+</div>
+</div>
+</div>
+
+<div id="orderPage" class="hidden">
+<div class="panel">
+<h2>New Order</h2>
+<p>Silakan pilih layanan untuk membuat pesanan simulasi.</p>
+
+<label>Category</label>
+<select id="category" onchange="updatePrice()">
+<option value="Instagram">Instagram</option>
+<option value="TikTok">TikTok</option>
+<option value="YouTube">YouTube</option>
+<option value="Facebook">Facebook</option>
+<option value="Telegram">Telegram</option>
+<option value="WhatsApp">WhatsApp</option>
+</select>
+
+<label>Service</label>
+<select id="service" onchange="updatePrice()">
+<option value="Followers">Followers (Demo)</option>
+<option value="Likes">Likes (Demo)</option>
+<option value="Views">Views (Demo)</option>
+</select>
+
+<label>Target Link</label>
+<input id="targetLink" placeholder="Masukkan URL akun atau konten">
+
+<label>Quantity</label>
+<input id="quantity" type="number" min="10" max="10000" value="100" oninput="updatePrice()">
+
+<div class="result">
+<p>Estimated Price</p>
+<strong id="price">Rp 5.000</strong>
+<p>Harga simulasi: Rp 5.000 per 100 unit.</p>
+</div>
+
+<button class="full" onclick="submitOrder()">SUBMIT DEMO ORDER</button>
+<div id="orderMsg" class="notice"></div>
+</div>
+</div>
+
+<div id="historyPage" class="hidden">
+<div class="panel">
+<h2>Order History</h2>
+<div id="historyList"><p>Belum ada pesanan.</p></div>
+</div>
 </div>
 </section>
 </main>
 
-<footer>© 2026 BANZZSMM PANEL · Demo Version</footer>
+<footer>© 2026 BANZZSMM PANEL · DEMO VERSION</footer>
 
 <script>
+const $=id=>document.getElementById(id);
+
 function getUsers(){
 return JSON.parse(localStorage.getItem("banzz_users")||"{}");
 }
+function getOrders(){
+return JSON.parse(localStorage.getItem("banzz_orders")||"{}");
+}
 function showRegister(){
-loginBox.classList.add("hidden");
-registerBox.classList.remove("hidden");
+$("loginBox").classList.add("hidden");
+$("registerBox").classList.remove("hidden");
 }
 function showLogin(){
-registerBox.classList.add("hidden");
-loginBox.classList.remove("hidden");
+$("registerBox").classList.add("hidden");
+$("loginBox").classList.remove("hidden");
 }
 function register(){
-let u=regUser.value.trim();
-let p=regPass.value;
-let c=regConfirm.value;
+let u=$("regUser").value.trim();
+let p=$("regPass").value;
+let c=$("regConfirm").value;
 let users=getUsers();
-if(u.length<3){regMsg.textContent="Username minimal 3 karakter.";return}
-if(p.length<6){regMsg.textContent="Password minimal 6 karakter.";return}
-if(p!==c){regMsg.textContent="Konfirmasi password tidak cocok.";return}
-if(users[u]){regMsg.textContent="Username sudah digunakan.";return}
+if(u.length<3){$("regMsg").textContent="Username minimal 3 karakter.";return}
+if(p.length<6){$("regMsg").textContent="Password minimal 6 karakter.";return}
+if(p!==c){$("regMsg").textContent="Password tidak cocok.";return}
+if(users[u]){$("regMsg").textContent="Username sudah digunakan.";return}
 users[u]=p;
 localStorage.setItem("banzz_users",JSON.stringify(users));
-regMsg.textContent="Registrasi berhasil! Silakan login.";
+$("regMsg").textContent="Registrasi berhasil! Silakan login.";
 }
 function login(){
-let u=loginUser.value.trim();
-let p=loginPass.value;
-let users=getUsers();
-if(users[u]===p){
+let u=$("loginUser").value.trim();
+let p=$("loginPass").value;
+if(getUsers()[u]===p){
 localStorage.setItem("banzz_session",u);
 openDashboard(u);
-}else{
-loginMsg.textContent="Username atau password salah.";
-}
+}else{$("loginMsg").textContent="Username atau password salah."}
 }
 function openDashboard(u){
-loginBox.classList.add("hidden");
-registerBox.classList.add("hidden");
-dashboard.classList.remove("hidden");
-logout.classList.remove("hidden");
-username.textContent=u;
+$("loginBox").classList.add("hidden");
+$("registerBox").classList.add("hidden");
+$("dashboard").classList.remove("hidden");
+$("logoutBtn").classList.remove("hidden");
+$("username").textContent=u;
+refreshStats();
 }
 function logout(){
 localStorage.removeItem("banzz_session");
-dashboard.classList.add("hidden");
-logout.classList.add("hidden");
+$("dashboard").classList.add("hidden");
+$("logoutBtn").classList.add("hidden");
 showLogin();
 }
-function order(name){
-message.textContent="Layanan "+name+" dipilih. Fitur pemesanan masih dalam pengembangan demo.";
+function showPage(page){
+["home","order","history"].forEach(x=>{
+$(x+"Page").classList.toggle("hidden",x!==page);
+$(x+"Tab").classList.toggle("active",x===page);
+});
+if(page==="history")renderHistory();
 }
+function updatePrice(){
+let q=Number($("quantity").value)||0;
+let price=Math.ceil(q/100)*5000;
+$("price").textContent="Rp "+price.toLocaleString("id-ID");
+}
+function submitOrder(){
+let user=localStorage.getItem("banzz_session");
+let category=$("category").value;
+let service=$("service").value;
+let link=$("targetLink").value.trim();
+let quantity=Number($("quantity").value);
+if(!link){$("orderMsg").textContent="Masukkan target link terlebih dahulu.";return}
+if(!/^https?:\/\//i.test(link)){$("orderMsg").textContent="Link harus diawali http:// atau https://";return}
+if(!Number.isInteger(quantity)||quantity<10||quantity>10000){$("orderMsg").textContent="Jumlah harus 10 sampai 10.000.";return}
+let orders=getOrders();
+if(!orders[user])orders[user]=[];
+let price=Math.ceil(quantity/100)*5000;
+orders[user].push({
+id:"BZ"+Date.now(),
+category,service,link,quantity,price,
+date:new Date().toLocaleString("id-ID"),
+status:"Demo - tidak diproses"
+});
+localStorage.setItem("banzz_orders",JSON.stringify(orders));
+$("orderMsg").textContent="Pesanan demo berhasil disimpan!";
+$("targetLink").value="";
+refreshStats();
+}
+function refreshStats(){
+let user=localStorage.getItem("banzz_session");
+let list=getOrders()[user]||[];
+$("totalOrders").textContent=String(list.length).padStart(2,"0");
+}
+function renderHistory(){
+let user=localStorage.getItem("banzz_session");
+let list=getOrders()[user]||[];
+if(!list.length){$("historyList").innerHTML="<p>Belum ada pesanan.</p>";return}
+$("historyList").innerHTML=list.slice().reverse().map(o=>
+`<div class="order"><b>${o.id} · ${o.category}</b><p>${o.service} · ${o.quantity} unit</p><p>${o.link}</p><p>Rp ${o.price.toLocaleString("id-ID")} · ${o.status}</p><p>${o.date}</p></div>`
+).join("");
+}
+updatePrice();
 let saved=localStorage.getItem("banzz_session");
-if(saved)openDashboard(saved);
+if(saved&&getUsers()[saved])openDashboard(saved);
+else localStorage.removeItem("banzz_session");
 </script>
-</body> 
-</html>
+</body>
+  </html>
