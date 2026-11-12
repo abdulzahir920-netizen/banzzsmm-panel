@@ -1,6 +1,100 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
+
+<style>
+/* BANZZSMM PANEL - PREMIUM DARK THEME */
+:root {
+  --bg: #080b16;
+  --panel: #11172a;
+  --purple: #8b5cf6;
+  --blue: #3b82f6;
+  --text: #f5f3ff;
+  --muted: #929bb3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 10% 0%, #34205c 0%, transparent 35%),
+    radial-gradient(ellipse at 90% 15%, #102c58 0%, transparent 35%),
+    var(--bg) !important;
+  color: var(--text) !important;
+  font-family: Inter, Arial, sans-serif !important;
+  min-height: 100vh;
+}
+
+header, nav, .navbar {
+  background: rgba(17, 23, 42, .92) !important;
+  border-bottom: 1px solid rgba(139,92,246,.2);
+  backdrop-filter: blur(15px);
+}
+
+.card, .stat-card, .dashboard-card,
+[class*="card"] {
+  background: linear-gradient(145deg, #171d34, #101528) !important;
+  border: 1px solid rgba(139,92,246,.2) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+  color: var(--text) !important;
+}
+
+button {
+  background: linear-gradient(110deg, #7c3aed, #2563eb) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 12px 18px;
+  font-weight: 700;
+  transition: .2s;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+input, select, textarea {
+  background: #0b1020 !important;
+  color: white !important;
+  border: 1px solid #343c59 !important;
+  border-radius: 11px !important;
+  padding: 12px !important;
+  width: 100%;
+}
+
+h1, h2, h3 {
+  color: #ffffff !important;
+}
+
+p, small, label {
+  color: #aeb8d0;
+}
+
+a {
+  color: #a78bfa;
+}
+
+img {
+  max-width: 100%;
+}
+
+@media(max-width:600px) {
+  body {
+    padding: 0;
+  }
+
+  .card, .stat-card, [class*="card"] {
+    border-radius: 15px !important;
+  }
+
+  button {
+    max-width: 100%;
+  }
+}
+</style>
+  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BANZZSMM PANEL</title>
