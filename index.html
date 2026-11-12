@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BANZZSMM PANEL</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#090b13;color:#fff}
+header{height:70px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;background:#111522;border-bottom:1px solid #252b40}
+.logo{font-size:21px;font-weight:900;color:#a78bfa}
+.logo span{color:#fff}
+.menu{display:flex;gap:15px;align-items:center}
+.menu a{color:#bbb;text-decoration:none;font-size:13px}
+main{max-width:1100px;margin:auto;padding:28px 18px}
+.welcome{padding:28px;border-radius:18px;background:linear-gradient(120deg,#5426a8,#171b36);margin-bottom:22px}
+.welcome p{color:#d5c9ff;font-size:13px;margin-top:9px}
+.welcome h1{font-size:27px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:25px}
+.stat,.panel{background:#141827;border:1px solid #252c40;border-radius:14px;padding:18px}
+.stat small{color:#929bb1}
+.stat h2{font-size:23px;margin-top:10px;color:#b59aff}
+.section-title{font-size:19px;margin-bottom:14px}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.service{background:#141827;border:1px solid #252c40;border-radius:13px;padding:18px}
+.service .icon{font-size:27px;margin-bottom:12px}
+.service p{font-size:12px;color:#9ca5bb;margin-top:7px}
+.tag{display:inline-block;margin-top:12px;background:#30234d;color:#c8b6ff;padding:6px 10px;border-radius:8px;font-size:11px}
+.panel{margin-top:25px}
+.panel p{color:#9ca5bb;font-size:13px;margin-top:9px;line-height:1.6}
+button{border:0;background:#8052df;color:white;padding:12px 17px;border-radius:9px;font-weight:bold;cursor:pointer;margin-top:14px}
+button:hover{background:#9b73ef}
+footer{text-align:center;padding:25px;color:#747d91;font-size:12px}
+@media(max-width:600px){
+.stats{grid-template-columns:1fr}
+.services{grid-template-columns:repeat(2,1fr)}
+.welcome h1{font-size:22px}
+.menu a{font-size:11px}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">BANZZ<span>SMM</span></div>
+<nav class="menu">
+<a href="#home">Home</a>
+<a href="#services">Services</a>
+<a href="#about">About</a>
+</nav>
+</header>
+<main>
+<section class="welcome" id="home">
+<h1>Welcome to BANZZSMM PANEL</h1>
+<p>Your Social Media Marketing Platform.</p>
+<button onclick="alert('Selamat datang di BANZZSMM PANEL!')">Get Started →</button>
+</section>
+
+<section class="stats">
+<div class="stat"><small>Total Services</small><h2>06</h2></div>
+<div class="stat"><small>Total Orders</small><h2>00</h2></div>
+<div class="stat"><small>Account Balance</small><h2>Rp 0</h2></div>
+</section>
+
+<h2 class="section-title" id="services">Our Services</h2>
+<section class="services">
+<div class="service"><div class="icon">📸</div><b>Instagram</b><p>Social media marketing services.</p><span class="tag">View Services</span></div>
+<div class="service"><div class="icon">🎵</div><b>TikTok</b><p>Social media marketing services.</p><span class="tag">View Services</span></div>
+<div class="service"><div class="icon">▶️</div><b>YouTube</b><p>Social media marketing services.</p><span class="tag">View Services</span></div>
+<div class="service"><div class="icon">👥</div><b>Facebook</b><p>Social media marketing services.</p><span class="tag">View Services</span></div>
+<div class="service"><div class="icon">✈️</div><b>Telegram</b><p>Social media marketing services.</p><span class="tag">View Services</span></div>
+<div class="service"><div class="icon">💬</div><b>WhatsApp</b><p>Social media marketing services.</p><span class="tag">View Services</span></div>
+</section>
+
+<section class="panel" id="about">
+<h2>About BANZZSMM</h2>
+<p>BANZZSMM PANEL is a demo social media marketing dashboard. Explore the platform and its interface. Orders and balances are currently simulated.</p>
+<button onclick="alert('Fitur demo sedang dikembangkan!')">Explore Panel</button>
+</section>
+</main>
+<footer>© 2026 BANZZSMM PANEL. All Rights Reserved.</footer>
+</body>
+  </html>
